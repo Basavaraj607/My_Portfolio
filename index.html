@@ -199,7 +199,7 @@ footer{border-top:1px solid var(--border);padding:28px 5vw}
         <a href="https://linkedin.com/in/basavarajrp" target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
         <a href="https://github.com/Basavaraj607" target="_blank" rel="noopener" class="btn-ghost">GitHub ↗</a>
         <button type="button" class="cert-link button" id="viewResumeBtn">View Resume <svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/></svg></button>
-        <a href="resume/Basavaraj_P.docx" download class="btn-ghost">Download My Resume</a>
+        <a href="resume/Basavaraj_P.pdf" download class="btn-ghost">Download My Resume</a>
       </div>
       
       
@@ -707,7 +707,8 @@ footer{border-top:1px solid var(--border);padding:28px 5vw}
         <div class="modal-title" id="resumeModalTitle">Resume Preview</div>
       </div>
       <div class="modal-actions">
-        <a href="resume/Basavaraj_P.pdf" download class="btn-ghost">Download</a>
+        <a href="resume/Basavaraj_P.pdf" target="_blank" rel="noopener" class="btn-ghost">Open PDF ↗</a>
+        <a href="resume/Basavaraj_P.pdf" download class="btn-primary">Download</a>
         <button type="button" class="modal-close" id="closeResumeModal" aria-label="Close preview">&times;</button>
       </div>
     </div>
@@ -726,7 +727,7 @@ const viewResumeBtn = document.getElementById('viewResumeBtn');
 const resumeModal = document.getElementById('resumeModal');
 const resumeModalBody = document.getElementById('resumeModalBody');
 const closeResumeModal = document.getElementById('closeResumeModal');
-const resumePath = 'resume/Basavaraj_P.docx';
+const resumePath = 'resume/Basavaraj_P.pdf';
 
 function openResumeModal() {
   resumeModal.classList.add('open');
@@ -742,7 +743,13 @@ function closeModal() {
 async function renderResumePreview() {
   const extension = resumePath.split('.').pop().toLowerCase();
   if (extension === 'pdf') {
-    resumeModalBody.innerHTML = '<iframe class="resume-preview-frame" src="' + resumePath + '" title="Resume preview"></iframe>';
+    resumeModalBody.innerHTML = '<object data="' + resumePath + '" type="application/pdf" class="resume-preview-frame">' +
+      '<iframe class="resume-preview-frame" src="' + resumePath + '" title="Resume preview">' +
+        '<div class="resume-preview-fallback"><strong>PDF Preview</strong><br><br>' +
+        '<a href="' + resumePath + '" target="_blank" rel="noopener" class="btn-primary" style="margin-right:8px;">Open PDF in New Tab ↗</a>' +
+        '<a href="' + resumePath + '" download class="btn-ghost">Download PDF</a></div>' +
+      '</iframe>' +
+    '</object>';
     return;
   }
 
